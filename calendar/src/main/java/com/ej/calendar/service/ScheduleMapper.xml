@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ej.calendar.service.ScheduleMapper">
+	<insert id="insertSchedule" parameterType="com.ej.calendar.service.Schedule">
+		INSERT INTO schedule(
+			schedule_date,
+			schedule_title,
+			schedule_content,
+			schedule_place,
+			schedule_title_color
+		) VALUE(
+			#{scheduleDate},
+			#{scheduleTitle},
+			#{scheduleContent},
+			#{schedulePlace},
+			#{scheduleTitleColor}
+		)
+	</insert>
+
+	<select id="selectScheduleListByDate" resultType="com.ej.calendar.service.Schedule" parameterType="String">
+		SELECT
+			schedule_no as scheduleNo,
+			schedule_title as scheduleTitle,
+			schedule_content as scheduleContent,
+			schedule_place as schedulePlace
+		FROM
+			schedule
+		WHERE
+			schedule_date = #{scheduleDate}
+		ORDER BY
+			schedule_no DESC
+	</select>
+	
+	<select id="selectScheduleTitleListByDate" resultType="com.ej.calendar.service.Schedule" parameterType="String">
+		SELECT
+			schedule_title as scheduleTitle,
+			schedule_title_color as scheduleTitleColor
+		FROM
+			schedule
+		WHERE
+			schedule_date = #{scheduleDate}
+		ORDER BY
+			schedule_no DESC
+	</select>
+</mapper>
