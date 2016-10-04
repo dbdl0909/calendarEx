@@ -17,6 +17,16 @@ public class ScheduleDao {
 	
 	String NS = "com.ej.calendar.service.ScheduleMapper";
 	
+	//repeat_schedule 테이블의 데이터 삭제 쿼리
+	public int deleteRepeatSchedule(int scheduleNo) {
+		return sqlSession.delete(NS+".deleteRepeatSchedule", scheduleNo);
+	}
+	
+	//schedule 테이블의 데이터 삭제 쿼리
+	public int deleteSchedule(int scheduleNo) {
+		return sqlSession.delete(NS+".deleteSchedule", scheduleNo);
+	}
+	
 	//매년 반복으로 저장했을때 title리스트 뽑을때 사용하는 쿼리
 	public List<Schedule> selectRepeatScheduleTitleListByDate(String scheduleDate) {
 		return sqlSession.selectList(NS+".selectRepeatScheduleTitleListByDate", scheduleDate);

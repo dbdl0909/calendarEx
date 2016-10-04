@@ -21,6 +21,14 @@ public class CalendarController {
 	@Autowired
 	CalendarService calendarService;
 	
+	@RequestMapping(value="/calendar/scheduleRemove", method=RequestMethod.GET)
+	public String removeSchedule(Schedule schedule) {	//가져올 값은 scheduleNo, repeat, originScheduleDate
+		String scheduleDday = schedule.getOriginScheduleDate();
+		logger.info("반복? : {}", schedule.getRepeat());
+		calendarService.removeSchedule(schedule);
+		return "redirect:/calendar/scheduleList?scheduleDday="+scheduleDday;
+	}
+	
 	@RequestMapping(value="/calendar/scheduleAdd", method=RequestMethod.POST)
 	public String addSchedule(Schedule schedule) {
 		String scheduleDday = schedule.getOriginScheduleDate();

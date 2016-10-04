@@ -18,6 +18,16 @@ public class CalendarService {
 	@Autowired
 	ScheduleDao scheduleDao;
 	
+	public int removeSchedule(Schedule schedule) {
+		logger.info("schedule : {}", schedule);
+		if(schedule.getRepeat() == null || schedule.getRepeat().equals("")) {
+			return scheduleDao.deleteSchedule(schedule.getScheduleNo());
+		} else if(schedule.getRepeat().equals("repeat")) {
+			return scheduleDao.deleteRepeatSchedule(schedule.getScheduleNo());
+		}
+		return -1;
+	}
+	
 	//클릭한 날짜에 해당하는 scheduleList를 가져오는 메서드
 	public List<Schedule> getScheduleListByDate(String scheduleDate) {
 		List<Schedule> scheduleList = scheduleDao.selectScheduleListByDate(scheduleDate);
@@ -27,11 +37,12 @@ public class CalendarService {
 	}
 	
 	public int addSchedule(Schedule schedule) {
-		if(schedule.getRepeat() == null) {		//repeat이 아닐때 Default 리턴값
+		if(schedule.getRepeat() == null || schedule.getRepeat().equals("")) {		//repeat이 아닐때 Default 리턴값
 			return scheduleDao.insertSchedule(schedule);
-		} else {								//schedule.getRepeat().equals("repeat")일 때
+		} else if(schedule.getRepeat().equals("repeat")) {
 			return scheduleDao.insertRepeatSchedules(schedule);
 		}
+		return -1;
 	}
 	
 	//index.jsp에서 보여줄 달력 화면(넘어오는 매개변수의 값에 따라 바뀐다.)

@@ -30,7 +30,13 @@
 	</head>
 	<body class="container">
 		<div>
-			<a href="./">목록으로</a>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+    				<div class="navbar-header">
+      					<a class="navbar-brand" href="./">Calendar로 가기</a>
+      				</div>
+      			</div>
+      		</nav>
 			<!-- schedule 입력폼 -->
 			<h2>Schedule 입력</h2>
 			<form id="scheduleAddForm" action="/calendar/scheduleAdd" method="post">
@@ -60,7 +66,7 @@
 						<td><input type="color" name="scheduleTitleColor"/></td>
 					</tr>
 					<tr>
-						<td colspan="2"><input type="button" id="addButton" value="등록"/></td>
+						<td colspan="2"><input type="button" class="btn btn-default" id="addButton" value="등록"/></td>
 					</tr>
 				</table>
 			</form>
@@ -90,7 +96,7 @@
 							 	${schedule.scheduleTitle}</td>
 							<td>${schedule.scheduleContent}</td>
 							<td>${schedule.schedulePlace}</td>
-							<td><a href="">삭제</a></td>
+							<td><a href="/calendar/scheduleRemove?scheduleNo=${schedule.scheduleNo}&repeat=${schedule.repeat}&originScheduleDate=${scheduleDday}">삭제</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
