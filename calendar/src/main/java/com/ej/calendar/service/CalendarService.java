@@ -16,15 +16,22 @@ public class CalendarService {
 	private static final Logger logger = LoggerFactory.getLogger(CalendarService.class);
 	
 	@Autowired
-	ScheduleDao scheduleDao;	
+	ScheduleDao scheduleDao;
 	
 	//클릭한 날짜에 해당하는 scheduleList를 가져오는 메서드
 	public List<Schedule> getScheduleListByDate(String scheduleDate) {
-		return scheduleDao.selectScheduleListByDate(scheduleDate);
+		List<Schedule> scheduleList = scheduleDao.selectScheduleListByDate(scheduleDate);
+		scheduleList.addAll(scheduleDao.selectRepeatScheduleListByDate(scheduleDate.substring(5)));
+									//날짜가 전부 들어가지 않았기 때문에 날짜의 문자열 5번째부터 자른다.
+		return scheduleList;
 	}
 	
 	public int addSchedule(Schedule schedule) {
-		return scheduleDao.insertSchedule(schedule);
+		if(schedule.getRepeat() == null) {		//repeat이 아닐때 Default 리턴값
+			return scheduleDao.insertSchedule(schedule);
+		} else {								//schedule.getRepeat().equals("repeat")일 때
+			return scheduleDao.insertRepeatSchedules(schedule);
+		}
 	}
 	
 	//index.jsp에서 보여줄 달력 화면(넘어오는 매개변수의 값에 따라 바뀐다.)
@@ -88,14 +95,16 @@ public class CalendarService {
 				//클릭한 날짜를 문자열로 만든다.(title List를 구해오기 위해)
 				String scheduleDate = oneDay.getYear()+"-"+oneDay.getMonth()+"-"+oneDay.getDay();
 				
+				//특정 날짜에 해당하는 title 리스트
 				//Calendar에 보여줄 해당 날짜에 해당하는 title List를 가져오는 메서드
 				List<Schedule> scheduleList = scheduleDao.selectScheduleTitleListByDate(scheduleDate);
+				
+				//매년 반복에 해당하는 title 리스트 뽑아온 뒤 두 개의 title 리스트을 합친다.
+				scheduleList.addAll(scheduleDao.selectRepeatScheduleTitleListByDate(scheduleDate.substring(5)));
+				
 				oneDay.setScheduleList(scheduleList);
 				
-				//oneDay(도메인)와 calendar테이블(DB) ResultSet 반복시키며 비교 후 매핑 
-				//...
-				
-			} else {							//마지막 날짜 후부터 35(7*5)까지
+			} else {					//마지막 날짜 후부터 35(7*5)까지
 				oneDay = new OneDay();
 				oneDay.setDay(endSpace);
 				endSpace++;

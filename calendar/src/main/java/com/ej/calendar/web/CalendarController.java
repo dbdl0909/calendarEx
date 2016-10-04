@@ -23,8 +23,9 @@ public class CalendarController {
 	
 	@RequestMapping(value="/calendar/scheduleAdd", method=RequestMethod.POST)
 	public String addSchedule(Schedule schedule) {
-		String scheduleDday = schedule.getScheduleDate();
+		String scheduleDday = schedule.getOriginScheduleDate();
 		logger.info("scheduleDday : {}", scheduleDday);
+		logger.info("นÝบน? : {}", schedule.getRepeat());
 		
 		calendarService.addSchedule(schedule);
 		return "redirect:/calendar/scheduleList?scheduleDday="+scheduleDday;

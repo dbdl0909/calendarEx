@@ -7,6 +7,8 @@ public class Schedule {
 	private String scheduleContent;
 	private String schedulePlace;
 	private String scheduleTitleColor;
+	private String repeat;
+	private String originScheduleDate;
 	
 	public int getScheduleNo() {
 		return scheduleNo;
@@ -45,10 +47,24 @@ public class Schedule {
 		this.scheduleTitleColor = scheduleTitleColor;
 	}
 	
+	public String getRepeat() {
+		return repeat;
+	}
+	public void setRepeat(String repeat) {
+		this.repeat = repeat;
+	}
+	public String getOriginScheduleDate() {
+		return originScheduleDate;
+	}
+	public void setOriginScheduleDate(String originScheduleDate) {
+		this.originScheduleDate = originScheduleDate;
+	}
+	
 	@Override
 	public String toString() {
 		return "Schedule [scheduleNo=" + scheduleNo + ", scheduleDate=" + scheduleDate + ", scheduleTitle="
 				+ scheduleTitle + ", scheduleContent=" + scheduleContent + ", schedulePlace=" + schedulePlace
-				+ ", scheduleTitleColor=" + scheduleTitleColor + "]";
+				+ ", scheduleTitleColor=" + scheduleTitleColor + ", repeat=" + repeat + ", originScheduleDate="
+				+ originScheduleDate + "]";
 	}
 }

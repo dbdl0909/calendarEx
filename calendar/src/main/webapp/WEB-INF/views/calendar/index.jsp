@@ -32,15 +32,7 @@
 			<tbody>
 				<tr class="something">
 					<c:forEach var="oneDay" items="${oneDayList}" varStatus="status">
-						<%-- <c:choose>
-							<c:when test="${todayMonth == oneDay.month && todayDay == oneDay.day}">
-								<td style="background-color: #E6FFFF;">
-							</c:when>
-							<c:otherwise>
-								<td>
-							</c:otherwise>
-						</c:choose> --%>
-						<td class="col-md-1">
+						<td class="col-md-1" height="90">
 							<c:choose>
 								<c:when test="${oneDay.scheduleList == null}">
 									<div style="color:#BDBDBD;">${oneDay.day}</div>
@@ -88,6 +80,9 @@
 												</a>
 												<c:forEach var="schedule" items="${oneDay.scheduleList}">
 													<div style="color:${schedule.scheduleTitleColor}">
+														<c:if test='${schedule.repeat eq "repeat"}'>
+															<img src="/resources/imgs/repeat.png">
+														</c:if>
 														<c:if test="${schedule.scheduleTitle.length() > 5}">
 															${schedule.scheduleTitle.substring(0,5)}..
 														</c:if>
